@@ -1,7 +1,7 @@
 function checkLengthString(string, length) {
   return string.length === length;
 }
-
+checkLengthString('string', 5);
 
 function checkPolindrome(string) {
   let palindrome = '';
@@ -10,7 +10,7 @@ function checkPolindrome(string) {
   }
   return palindrome.replaceAll(' ', '').toUpperCase() === string.replaceAll(' ', '').toUpperCase();
 }
-
+checkPolindrome('string');
 function returnNumber(string){
   string = String(string);
   let newNum = '';
@@ -21,3 +21,4 @@ function returnNumber(string){
   }
   return newNum === '' ? NaN : Number(newNum);
 }
+returnNumber('42');
