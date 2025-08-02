@@ -46,16 +46,17 @@ function applyFilter(filterId) {
   setupMiniaturesEvents(filteredPhotos);
 }
 
-// 👉 Основной экспорт
+const debouncedApplyFilter = debounce(applyFilter, 500);
+
 export function setupFilters(photos) {
   currentPhotos = photos;
 
   filtersContainer.classList.remove('img-filters--inactive');
 
   filterButtons.forEach((button) => {
-    button.addEventListener('click', debounce(() => {
+    button.addEventListener('click', () => {
       setActiveButton(button);
-      applyFilter(button.id);
-    }, 500));
+      debouncedApplyFilter(button.id);
+    });
   });
 }

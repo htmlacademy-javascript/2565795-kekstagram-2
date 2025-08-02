@@ -1,8 +1,8 @@
-const SERVER_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
+const SERVER_URL = 'https://32.javascript.htmlacademy.pro/kekstagram/';
 
 export async function getPhotos() {
   try {
-    const response = await fetch(`${SERVER_URL}/data`);
+    const response = await fetch(`${SERVER_URL}data`);
     if (!response.ok) {
       throw new Error(`Ошибка загрузки данных: ${response.status}`);
     }
@@ -18,9 +18,7 @@ export async function sendFormData(formData) {
       method: 'POST',
       body: formData,
     });
-    if (!response.ok) {
-      throw new Error(`Ошибка отправки: ${response.status}`);
-    }
+    return response;
   } catch (error) {
     throw new Error('Не удалось отправить форму. Попробуйте ещё раз.');
   }

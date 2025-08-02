@@ -1,26 +1,31 @@
 import { getPhotos } from './api.js';
 import { renderMiniatures } from './render-miniatures.js';
 import { setupMiniaturesEvents } from './events.js';
+import { setupFilters } from './filters.js';
+import { validationForm } from './form-validation.js';
 import { PhotoUploadForm } from './form.js';
 import { setupImageEffects } from './effects-slider.js';
-import { validationForm } from './form-validation.js';
-import { setupFilters } from './filters.js';
-
-PhotoUploadForm();
-setupImageEffects();
-validationForm();
 
 getPhotos()
   .then((photos) => {
     renderMiniatures(photos);
     setupMiniaturesEvents(photos);
-    setupFilters(photos); // 👈 включаем фильтры
+    setupFilters(photos); // покажет .img-filters
   })
   .catch(() => {
-    const template = document.querySelector('#data-error');
-    const fragment = template.content.cloneNode(true);
-    document.body.appendChild(fragment);
-    setTimeout(() => {
-      document.querySelector('.data-error')?.remove();
-    }, 5000);
+    const errorTemplate = document.querySelector('#data-error');
+    if (errorTemplate) {
+      const error = errorTemplate.content.cloneNode(true);
+      document.body.appendChild(error);
+      setTimeout(() => {
+        const shownError = document.querySelector('.data-error');
+        if (shownError) {
+          shownError.remove();
+        }
+      }, 5000);
+    }
   });
+
+PhotoUploadForm();
+validationForm();
+setupImageEffects();
