@@ -1,11 +1,11 @@
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
 const picture = pictureTemplate.querySelector('.picture');
-export function renderMiniatures(photos) {
+
+export const renderMiniatures = (photos) => {
   const fragment = document.createDocumentFragment();
 
   for (const [index, photo] of photos.entries()) {
-
     const newElement = picture.cloneNode(true);
     const newElemImage = newElement.querySelector('.picture__img');
     const newElemComments = newElement.querySelector('.picture__comments');
@@ -22,4 +22,4 @@ export function renderMiniatures(photos) {
   }
 
   picturesContainer.appendChild(fragment);
-}
+};

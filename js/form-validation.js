@@ -15,7 +15,7 @@ const pristine = new Pristine(form, {
   errorTextClass: 'pristine-error img-upload__field-wrapper--error',
 });
 
-export function resetForm() {
+export const resetForm = () => {
   form.reset();
   pristine.reset();
 
@@ -24,9 +24,75 @@ export function resetForm() {
   previewImg.style.filter = '';
   fileInput.value = '';
   document.querySelector('#effect-none').checked = true;
-}
+};
 
-export function validateForm() {
+const showSuccessMessage = () => {
+  const template = document.querySelector('#success').content.cloneNode(true);
+  const section = template.querySelector('.success');
+  const button = section.querySelector('.success__button');
+
+  function removeSuccessMessage() {
+    section.remove();
+    document.removeEventListener('keydown', onEsc);
+    document.removeEventListener('click', onOutsideClick);
+  }
+
+  function onEsc(evt) {
+    if (evt.key === 'Escape') {
+      removeSuccessMessage();
+    }
+  }
+
+  function onOutsideClick(evt) {
+    if (evt.target === section) {
+      removeSuccessMessage();
+    }
+  }
+
+  function onSuccessButtonClick() {
+    removeSuccessMessage();
+  }
+
+  document.body.appendChild(section);
+  button.addEventListener('click', onSuccessButtonClick);
+  document.addEventListener('keydown', onEsc);
+  document.addEventListener('click', onOutsideClick);
+};
+
+const showErrorMessage = () => {
+  const template = document.querySelector('#error').content.cloneNode(true);
+  const section = template.querySelector('.error');
+  const button = section.querySelector('.error__button');
+
+  function removeErrorMessage() {
+    section.remove();
+    document.removeEventListener('keydown', onEsc);
+    document.removeEventListener('click', onOutsideClick);
+  }
+
+  function onEsc(evt) {
+    if (evt.key === 'Escape') {
+      removeErrorMessage();
+    }
+  }
+
+  function onOutsideClick(evt) {
+    if (evt.target === section) {
+      removeErrorMessage();
+    }
+  }
+
+  function onErrorButtonClick() {
+    removeErrorMessage();
+  }
+
+  document.body.appendChild(section);
+  button.addEventListener('click', onErrorButtonClick);
+  document.addEventListener('keydown', onEsc);
+  document.addEventListener('click', onOutsideClick);
+};
+
+export const validateForm = () => {
   const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
 
   const getHashtags = (value) => {
@@ -103,64 +169,4 @@ export function validateForm() {
         submitBtn.textContent = 'Опубликовать';
       });
   });
-}
-
-function showSuccessMessage() {
-  const template = document.querySelector('#success').content.cloneNode(true);
-  const section = template.querySelector('.success');
-  const button = section.querySelector('.success__button');
-
-  document.body.appendChild(section);
-
-  function removeSuccessMessage() {
-    section.remove();
-    document.removeEventListener('keydown', onEsc);
-    document.removeEventListener('click', onOutsideClick);
-  }
-
-  function onEsc(evt) {
-    if (evt.key === 'Escape') {
-      removeSuccessMessage();
-    }
-  }
-
-  function onOutsideClick(evt) {
-    if (evt.target === section) {
-      removeSuccessMessage();
-    }
-  }
-
-  button.addEventListener('click', removeSuccessMessage);
-  document.addEventListener('keydown', onEsc);
-  document.addEventListener('click', onOutsideClick);
-}
-
-function showErrorMessage() {
-  const template = document.querySelector('#error').content.cloneNode(true);
-  const section = template.querySelector('.error');
-  const button = section.querySelector('.error__button');
-
-  document.body.appendChild(section);
-
-  function removeErrorMessage() {
-    section.remove();
-    document.removeEventListener('keydown', onEsc);
-    document.removeEventListener('click', onOutsideClick);
-  }
-
-  function onEsc(evt) {
-    if (evt.key === 'Escape') {
-      removeErrorMessage();
-    }
-  }
-
-  function onOutsideClick(evt) {
-    if (evt.target === section) {
-      removeErrorMessage();
-    }
-  }
-
-  button.addEventListener('click', removeErrorMessage);
-  document.addEventListener('keydown', onEsc);
-  document.addEventListener('click', onOutsideClick);
-}
+};

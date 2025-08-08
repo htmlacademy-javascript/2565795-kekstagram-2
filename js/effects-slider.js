@@ -1,9 +1,3 @@
-const previewImg = document.querySelector('.img-upload__preview img');
-const effectList = document.querySelector('.effects__list');
-const effectLevel = document.querySelector('.img-upload__effect-level');
-const effectValue = document.querySelector('.effect-level__value');
-const sliderElement = document.querySelector('.effect-level__slider');
-
 const EFFECTS = {
   none: {
     filter: 'none',
@@ -37,6 +31,13 @@ const EFFECTS = {
   },
 };
 
+const previewImg = document.querySelector('.img-upload__preview img');
+const effectList = document.querySelector('.effects__list');
+const effectLevel = document.querySelector('.img-upload__effect-level');
+const effectValue = document.querySelector('.effect-level__value');
+const sliderElement = document.querySelector('.effect-level__slider');
+
+
 let currentEffect = 'none';
 
 noUiSlider.create(sliderElement, {
@@ -49,7 +50,7 @@ noUiSlider.create(sliderElement, {
   connect: 'lower',
 });
 
-function updateEffect(effectName) {
+const updateEffect = (effectName) => {
   const effect = EFFECTS[effectName];
   if (effectName === 'none') {
     previewImg.style.filter = 'none';
@@ -67,7 +68,7 @@ function updateEffect(effectName) {
     previewImg.style.filter = `${effect.filter}(${effect.slider.start}${effect.unit})`;
     effectValue.value = effect.slider.start;
   }
-}
+};
 
 sliderElement.noUiSlider.on('update', () => {
   const value = sliderElement.noUiSlider.get();
@@ -88,15 +89,15 @@ effectList.addEventListener('change', (evt) => {
   }
 });
 
-export function resetEffect() {
+export const resetEffect = () => {
   currentEffect = 'none';
   previewImg.style.filter = 'none';
   effectLevel.classList.add('hidden');
   sliderElement.noUiSlider.set(EFFECTS.none.slider.start);
   effectValue.value = EFFECTS.none.slider.start;
   document.querySelector('#effect-none').checked = true;
-}
+};
 
-export function setupImageEffects() {
+export const setupImageEffects = () => {
   updateEffect('none');
-}
+};

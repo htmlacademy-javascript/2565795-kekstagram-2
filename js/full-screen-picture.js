@@ -1,3 +1,5 @@
+const COMMENTS_STEP = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
 const bigPictureLikes = bigPicture.querySelector('.likes-count');
@@ -10,17 +12,16 @@ const closeButton = bigPicture.querySelector('.big-picture__cancel');
 
 let archiveComments = [];
 let renderedCount = 0;
-const COMMENTS_STEP = 5;
 
-function updateLoaderVisibility() {
+const updateLoaderVisibility = () => {
   if (renderedCount >= archiveComments.length) {
     commentsLoader.classList.add('hidden');
   } else {
     commentsLoader.classList.remove('hidden');
   }
-}
+};
 
-export function renderComments() {
+export const renderComments = () => {
   const nextComments = archiveComments.slice(renderedCount, renderedCount + COMMENTS_STEP);
   let added = 0;
 
@@ -37,9 +38,9 @@ export function renderComments() {
   bigPictureAllQuantityComments.textContent = archiveComments.length;
 
   updateLoaderVisibility();
-}
+};
 
-function createComment(comment) {
+export function createComment(comment) {
   const li = document.createElement('li');
   li.classList.add('social__comment');
 
@@ -60,7 +61,7 @@ function createComment(comment) {
   return li;
 }
 
-export function showBigPicture(photo) {
+export const showBigPicture = (photo) => {
   bigPictureImg.src = photo.url;
   bigPictureImg.alt = photo.description;
   bigPictureLikes.textContent = photo.likes;
@@ -81,7 +82,7 @@ export function showBigPicture(photo) {
       closeBigPicture();
     }
   });
-}
+};
 
 export function closeBigPicture() {
   bigPicture.classList.add('hidden');
@@ -91,7 +92,11 @@ export function closeBigPicture() {
   bigPictureCommentsContainer.innerHTML = '';
 }
 
-closeButton.addEventListener('click', closeBigPicture);
+const onCloseButtonClick = () => {
+  closeBigPicture();
+};
+
+closeButton.addEventListener('click', onCloseButtonClick);
 
 document.addEventListener('keydown', (evt) => {
   const isHashtagFocus = document.activeElement.classList.contains('text__hashtags');

@@ -1,4 +1,7 @@
 import { resetForm } from './form-validation.js';
+const SCALE_STEP = 25;
+const SCALE_MIN = 25;
+const SCALE_MAX = 100;
 
 const buttonDownload = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -13,16 +16,13 @@ const hashtagsInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
 
 let scale = 100;
-const SCALE_STEP = 25;
-const SCALE_MIN = 25;
-const SCALE_MAX = 100;
 
-function updateScale() {
+const updateScale = () => {
   scaleInput.value = `${scale}%`;
   previewImg.style.transform = `scale(${scale / 100})`;
-}
+};
 
-function openUploadModal() {
+const openUploadModal = () => {
   uploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
@@ -32,15 +32,15 @@ function openUploadModal() {
 
   scale = 100;
   updateScale();
-}
+};
 
-function closeUploadModal() {
+const closeUploadModal = () => {
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   resetForm();
-}
+};
 
-export function uploadPhotoForm() {
+export const uploadPhotoForm = () => {
   smallerBtn.addEventListener('click', () => {
     if (scale > SCALE_MIN) {
       scale -= SCALE_STEP;
@@ -74,6 +74,7 @@ export function uploadPhotoForm() {
   buttonCancel.addEventListener('click', () => {
     closeUploadModal();
   });
+
   uploadOverlay.addEventListener('click', (evt) => {
     const inner = uploadOverlay.querySelector('.img-upload__wrapper');
     if (!inner.contains(evt.target)) {
@@ -92,6 +93,6 @@ export function uploadPhotoForm() {
       closeUploadModal();
     }
   });
-}
+};
 
 export { closeUploadModal };
